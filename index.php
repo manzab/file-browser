@@ -79,16 +79,18 @@ declare(strict_types=1) ?>
         </thead>
         <tbody>
             <?php
-            if (!isset($_GET['path']) and !isset($_POST['new_dir'])) {
+            //Showing current working directory's files and folders
+            if (!isset($_GET['path']) and !isset($_POST['new_dir']) and empty($_POST)) {
                 $dir = getcwd();
                 $a = scandir($dir);
                 foreach ($a as $val) {
                     if ($val != '.' and $val != '..')
                         if (is_dir($val)) {
                             print("<tr><td>Folder</td><td><a href='?path=$val'>" . $val . "</a></td><td></td></tr>");
-                        } else print("<tr><td>File</td><td>" . $val . "</a></td><td><form method='POST'><input type='submit' name='delete' value='Delete'></form></td></tr><br>");
+                        } else print("<tr><td>File</td><td>" . $val . "</a></td><td><form method='POST'><input type='submit' name='$val' value='Delete'></form></td></tr><br>");
                 };
             };
+            //Navigating among folders
             if (isset($_GET) and $_GET['path'] != "") {
                 $current_dir = $_GET['path'];
                 chdir($current_dir);
@@ -98,9 +100,10 @@ declare(strict_types=1) ?>
                     if ($val != '.' and $val != '..')
                         if (is_dir($val)) {
                             print("<tr><td>Folder</td><td><a href='$url/$val'>" . $val . "</a></td><td></td></tr>");
-                        } else print("<tr><td>File</td><td>" . $val . "</a></td><td><form method='POST'><input type='submit' name= $val value='Delete'></form></td></tr><br>");
+                        } else print("<tr><td>File</td><td>" . $val . "</a></td><td><form method='POST'><input type='submit' name='$val' value='Delete'></form></td></tr><br>");
                 };
             }
+            //Creating new directory
             if (isset($_POST['new_dir']) and $_POST['new_dir'] != "") {
                 $dir = getcwd();
                 mkdir($dir . '/' . $_POST['new_dir']);
@@ -109,16 +112,27 @@ declare(strict_types=1) ?>
                     if ($val != '.' and $val != '..')
                         if (is_dir($val)) {
                             print("<tr><td>Folder</td><td><a href='?path=$val'>" . $val . "</a></td><td></td></tr>");
-                        } else print("<tr><td>File</td><td>" . $val . "</a></td><td><form method='POST'><input type='submit' name='delete' value='Delete'></form></td></tr><br>");
+                        } else print("<tr><td>File</td><td>" . $val . "</a></td><td><form method='POST'><input type='submit' name='$val' value='Delete'></form></td></tr><br>");
                 };
             };
-            if (isset($_POST["'" . $val . "'"])) unlink($val);
-
-
+            // Deleting files
+            if (!empty($_POST) and empty(isset($_POST['new_dir']))) {
+                $file_name = str_replace("_", ".", array_keys($_POST)[0]);
+                unlink($file_name);
+                $dir = getcwd();
+                $a = scandir($dir);
+                foreach ($a as $val) {
+                    if ($val != '.' and $val != '..')
+                        if (is_dir($val)) {
+                            print("<tr><td>Folder</td><td><a href='?path=$val'>" . $val . "</a></td><td></td></tr>");
+                        } else print("<tr><td>File</td><td>" . $val . "</a></td><td><form method='POST'><input type='submit' name='$val' value='Delete'></form></td></tr><br>");
+                };
+            }
             ?>
         </tbody>
     </table>
     <?php
+    //Back button
     $dirc = $_SERVER['REQUEST_URI'];
     $previous_dir = dirname($dirc);
     print("<button><a href='$previous_dir'>BACK</a></button>");
