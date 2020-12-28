@@ -1,0 +1,77 @@
+h1 {
+    margin-left: 5vw;
+}
+
+table {
+    width: 90vw;
+    margin: auto;
+    background-color: #f4f1de;
+    border-collapse: collapse;
+}
+
+th {
+    font-size: 1.5em;
+    background-color: #81b29a;
+    border: 2px solid #81b29a;
+}
+
+td {
+    font-size: 1.5em;
+    text-align: center;
+    height: 1.5em;
+    width: calc(100% / 3);
+}
+
+tr:nth-of-type(even) {
+    background-color: white;
+}
+
+a {
+    text-decoration: none;
+    width: 100%;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    margin-left: 5vw;
+    margin-top: 1vw;
+    width: 15vw;
+    padding: .25vw;
+}
+
+#submit {
+    width: 6vw;
+    margin-left: 0;
+    padding: 0;
+    height: 2.1vh;
+}
+
+#input {
+    margin-left: 5vw;
+}
+
+#login {
+    text-align: center;
+    margin-top: 35vh;
+}
+
+#login>input {
+    margin-top: 2vh;
+}
+
+#login button {
+    display: block;
+    width: 5vw;
+    margin: 0;
+    margin-top: 2vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logout {
+    transform-box: inherit;
+    transform: translate(85%, 50%);
+}
