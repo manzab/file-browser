@@ -55,7 +55,7 @@ if (isset($_GET['action']) and $_GET['action'] == 'logout') {
     <div>
         <?php
         if ($_SESSION['logged_in'] == true) {
-            require('main.php');
+            require('main_logic.php');
         } else {
         ?>
             <form id="login" action="./index.php" method="post">
