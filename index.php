@@ -22,12 +22,11 @@ if (isset($_GET['action']) and $_GET['action'] == 'logout') {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File browser</title>
-    <link rel="stylesheet" href="styles.css">
+    <link type="text/css" rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div>
@@ -43,11 +42,12 @@ if (isset($_GET['action']) and $_GET['action'] == 'logout') {
                 $_POST['password'] == 'qwerty'
             ) {
                 $_SESSION['logged_in'] = true;
-                $_SESSION['timeout'] = time();
-                $_SESSION['username'] = 'Mindaugas';
+                $_SESSION['timeout'] = time()+1800;
+                $_SESSION['username'] = 'Mantas';
                 echo 'You have entered valid use name and password';
             } else {
                 $err = 'Wrong username or password';
+                echo $err;
             }
         }
         ?>

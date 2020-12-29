@@ -1,5 +1,10 @@
-h1 {
+h1, #input {
     margin-left: 5vw;
+    margin-bottom: 0;
+}
+
+div, table {
+    margin-top: 0;
 }
 
 table {
@@ -43,15 +48,11 @@ button {
 }
 
 #submit {
-    width: 6vw;
     margin-left: 0;
     padding: 0;
-    height: 2.1vh;
+    height: 3.5vh;
 }
 
-#input {
-    margin-left: 5vw;
-}
 
 #login {
     text-align: center;

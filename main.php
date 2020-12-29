@@ -56,6 +56,6 @@ $dirc = $_SERVER['REQUEST_URI'];
 $previous_dir = dirname($dirc);
 print("<button><a href='$previous_dir'>BACK</a></button>");
 print("<br>");
-print("<form action=''method='POST'><input type='text' name='new_dir' id='input' placeholder='Name of new directory'><button id='submit'>Submit</button></form>");
+print("<form action=''method='POST'><input type='text' required name='new_dir' id='input' placeholder='Name of new directory'><button id='submit'>Submit</button></form>");
 ?>
 <div class="logout">Click here to <a href="index.php?action=logout"> logout.</div>
