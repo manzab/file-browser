@@ -27,12 +27,14 @@ echo "<h1>Directory contents: $url</h1>";
                 if ($val != '.' and $val != '..')
                     if (is_dir($val)) {
                         print("<tr><td>Folder</td><td><a href='$url/$val'>" . $val . "</a></td><td></td></tr>");
-                    } else {print("<tr><td>File</td><td>" . $val . "</td><td><form method='POST' id='actions'><input type='submit' name='$val' value='Delete'></form>");
-                    print('<form action="?path=' . $val . '" method="POST">');
-                    print('<button id="dwn" type="submit" name="download" value="'. $val.'">Download</button>');
-                    print('</form>');
-                    print("</td></tr><br>");
-            }};
+                    } else {
+                        print("<tr><td>File</td><td>" . $val . "</td><td><form method='POST'><button type='submit' name='del' value=$val>Delete</button></form>");
+                        print('<form action="?path=' . $val . '" method="POST">');
+                        print('<button id="dwn" type="submit" name="download" value="' . $val . '">Download</button>');
+                        print('</form>');
+                        print("</td></tr><br>");
+                    }
+            };
         }
         //Creating new directory
         if (isset($_POST['new_dir']) and $_POST['new_dir'] != "") {
@@ -41,18 +43,20 @@ echo "<h1>Directory contents: $url</h1>";
             header('Location: ' . $_SERVER['REQUEST_URI']);
             $a = scandir($dir);
             displayContents($a);
-            
         };
         // Deleting files
-        if (!empty($_POST) and !isset($_POST['new_dir'])) {
-            $pattern = "~_(?=[^_]*$)~";
-            $str = array_keys($_POST)[0];
-            $file_name = preg_replace($pattern, ".", $str);
-            unlink($file_name);
+        if (isset($_POST['del'])) {
+            $dirc = $_SERVER['REQUEST_URI'];
+            $previous_dir = dirname($dirc);
+            $file_del =  $_GET['path'] . './' . $_POST['del'];
+            // define('ROOTPATH', dirname(dirname(__FILE__)));
+            // unlink(ROOTPATH .  "/" . $_GET['path'] . '/' . $_POST['del']);
+            // print_r($file_del); 
+            unlink($file_del);
             header('Location: ' . $_SERVER['REQUEST_URI']);
-            $dir = getcwd();
-            $a = scandir($dir);
-            displayContents($a);    
+            // $dir = getcwd();
+            // $a = scandir($dir);
+            // displayContents($a);
         }
         ?>
     </tbody>

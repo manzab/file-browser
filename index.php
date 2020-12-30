@@ -38,27 +38,28 @@ if (isset($_FILES['image'])) {
         $errors[] = 'File size must be excately 2 MB';
     }
     if (empty($errors) == true) {
-        move_uploaded_file($file_tmp, "./" . $path . $file_name);
+        move_uploaded_file($file_tmp, $_GET['path'] . "./" . $file_name);
         header('Location: ' . $_SERVER['REQUEST_URI']);
     } else {
         print_r($errors[0]);
     }
 }
 // main function for displaying files and directories
-function displayContents($x) {
+function displayContents($x)
+{
     foreach ($x as $val) {
         if ($val != '.' and $val != '..') {
             if (is_dir($val)) {
                 print("<tr><td>Folder</td><td><a href='?path=$val'>" . $val . "</a></td><td></td></tr>");
-            } 
-            else {print("<tr><td>File</td><td>" . $val . "</td><td><form method='POST' id='actions'><input type='submit' name='$val' value='Delete'></form>");
-        print('<form action="?path=' . $val . '" method="POST">');
-        print('<button id="dwn" type="submit" name="download" value="'. $val.'">Download</button>');
-        print('</form>');
-        print("</td></tr><br>");
-    }
-}
-};
+            } else {
+                print("<tr><td>File</td><td>" . $val . "</td><td><form method='POST'><button type='submit' name='del' value=$val>Delete</button></form>");
+                print('<form action="?path=' . $val . '" method="POST">');
+                print('<button id="dwn" type="submit" name="download" value="' . $val . '">Download</button>');
+                print('</form>');
+                print("</td></tr><br>");
+            }
+        }
+    };
 }
 
 session_start();
