@@ -27,8 +27,12 @@ echo "<h1>Directory contents: $url</h1>";
                 if ($val != '.' and $val != '..')
                     if (is_dir($val)) {
                         print("<tr><td>Folder</td><td><a href='$url/$val'>" . $val . "</a></td><td></td></tr>");
-                    } else print("<tr><td>File</td><td>" . $val . "</a></td><td><form method='POST'><input type='submit' name='$val' value='Delete'></form></td></tr><br>");
-            };
+                    } else {print("<tr><td>File</td><td>" . $val . "</td><td><form method='POST' id='actions'><input type='submit' name='$val' value='Delete'></form>");
+                    print('<form action="?path=' . $val . '" method="POST">');
+                    print('<button id="dwn" type="submit" name="download" value="'. $val.'">Download</button>');
+                    print('</form>');
+                    print("</td></tr><br>");
+            }};
         }
         //Creating new directory
         if (isset($_POST['new_dir']) and $_POST['new_dir'] != "") {
@@ -37,15 +41,18 @@ echo "<h1>Directory contents: $url</h1>";
             header('Location: ' . $_SERVER['REQUEST_URI']);
             $a = scandir($dir);
             displayContents($a);
+            
         };
         // Deleting files
         if (!empty($_POST) and !isset($_POST['new_dir'])) {
-            $file_name = str_replace("_", ".", array_keys($_POST)[0]);
+            $pattern = "~_(?=[^_]*$)~";
+            $str = array_keys($_POST)[0];
+            $file_name = preg_replace($pattern, ".", $str);
             unlink($file_name);
             header('Location: ' . $_SERVER['REQUEST_URI']);
             $dir = getcwd();
             $a = scandir($dir);
-            displayContents($a);
+            displayContents($a);    
         }
         ?>
     </tbody>
@@ -54,7 +61,13 @@ echo "<h1>Directory contents: $url</h1>";
 //Back button
 $dirc = $_SERVER['REQUEST_URI'];
 $previous_dir = dirname($dirc);
-print("<button><a href='$previous_dir'>BACK</a></button>");
+print("<button id='bck'><a href='$previous_dir'>BACK</a></button>");
+print("<br>"); ?>
+<form action="" method="POST" id="upl" enctype="multipart/form-data">
+    <input type="file" name="image">
+    <input type="submit">
+</form>
+<?php
 print("<br>");
 print("<form action=''method='POST'><input type='text' required name='new_dir' id='input' placeholder='Name of new directory'><button id='submit'>Submit</button></form>");
 ?>

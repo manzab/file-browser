@@ -40,17 +40,10 @@ a:hover {
     text-decoration: underline;
 }
 
-button {
-    margin-left: 5vw;
-    margin-top: 1vw;
-    width: 15vw;
-    padding: .25vw;
-}
-
 #submit {
     margin-left: 0;
     padding: 0;
-    height: 3.5vh;
+    height: 2.2vh;
 }
 
 
@@ -75,4 +68,18 @@ button {
 .logout {
     transform-box: inherit;
     transform: translate(85%, 50%);
+}
+
+#upl {
+    margin-left: 5vw;
+    margin-top: 2vw;
+}
+
+#upl input[type="submit"] {
+    display: block;
+}
+
+#bck {
+    margin-left: 5vw;
+    margin-top: 1vw;
 }
