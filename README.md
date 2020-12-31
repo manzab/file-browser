@@ -1,4 +1,4 @@
-# file-browser
+# File-browser
 
 File browser system used for navigating between folders, creating new directories, downloading and deleting files. Also you can upload images with extensions .jpg, .jpeg, .png. with size less than 2 MB. 
 
