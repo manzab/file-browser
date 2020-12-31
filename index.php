@@ -35,7 +35,7 @@ if (isset($_FILES['image'])) {
         $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
     }
     if ($file_size > 2097152) {
-        $errors[] = 'File size must be excately 2 MB';
+        $errors[] = 'File size must be less than 2 MB';
     }
     if (empty($errors) == true) {
         move_uploaded_file($file_tmp, $_GET['path'] . "./" . $file_name);
@@ -48,7 +48,7 @@ if (isset($_FILES['image'])) {
 function displayContents($x)
 {
     foreach ($x as $val) {
-        if ($val != '.' and $val != '..') {
+        if ($val != '.' and $val != '..' and $val != '.git') {
             if (is_dir($val)) {
                 print("<tr><td>Folder</td><td><a href='?path=$val'>" . $val . "</a></td><td></td></tr>");
             } else {
@@ -74,7 +74,6 @@ if (isset($_GET['action']) and $_GET['action'] == 'logout') {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,9 +95,8 @@ if (isset($_GET['action']) and $_GET['action'] == 'logout') {
                 $_POST['password'] == 'qwerty'
             ) {
                 $_SESSION['logged_in'] = true;
-                $_SESSION['timeout'] = time() + 1800;
+                $_SESSION['timeout'] = time();
                 $_SESSION['username'] = 'Mantas';
-                echo 'You have entered valid use name and password';
             } else {
                 $err = 'Wrong username or password';
                 echo $err;

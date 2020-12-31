@@ -12,7 +12,7 @@ echo "<h1>Directory contents: $url</h1>";
     <tbody>
         <?php
         //Showing current working directory's files and folders
-        if (!isset($_GET['path']) and !isset($_POST['new_dir']) and empty($_POST)) {
+        if (!isset($_GET['path']) and !isset($_POST['new_dir'])) {
             $dir = getcwd();
             $a = scandir($dir);
             displayContents($a);
@@ -24,7 +24,7 @@ echo "<h1>Directory contents: $url</h1>";
             $dir = getcwd();
             $a = scandir($dir);
             foreach ($a as $val) {
-                if ($val != '.' and $val != '..')
+                if ($val != '.' and $val != '..' and $val != '.git')
                     if (is_dir($val)) {
                         print("<tr><td>Folder</td><td><a href='$url/$val'>" . $val . "</a></td><td></td></tr>");
                     } else {
@@ -46,17 +46,9 @@ echo "<h1>Directory contents: $url</h1>";
         };
         // Deleting files
         if (isset($_POST['del'])) {
-            $dirc = $_SERVER['REQUEST_URI'];
-            $previous_dir = dirname($dirc);
-            $file_del =  $_GET['path'] . './' . $_POST['del'];
-            // define('ROOTPATH', dirname(dirname(__FILE__)));
-            // unlink(ROOTPATH .  "/" . $_GET['path'] . '/' . $_POST['del']);
-            // print_r($file_del); 
+            $file_del = getcwd() . './' . $_POST['del'];
             unlink($file_del);
             header('Location: ' . $_SERVER['REQUEST_URI']);
-            // $dir = getcwd();
-            // $a = scandir($dir);
-            // displayContents($a);
         }
         ?>
     </tbody>
